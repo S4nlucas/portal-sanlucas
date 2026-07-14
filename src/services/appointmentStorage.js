@@ -1,4 +1,4 @@
-const STORAGE_KEY = "sanlucas_appointment_requests";
+import { supabase } from "../lib/supabase";
 
 export const APPOINTMENT_STATUSES = {
   PENDING: "Pendiente",
@@ -7,80 +7,119 @@ export const APPOINTMENT_STATUSES = {
   CANCELLED: "Cancelado",
 };
 
-function readAppointments() {
-  try {
-    const storedData = localStorage.getItem(STORAGE_KEY);
-
-    if (!storedData) {
-      return [];
-    }
-
-    const parsedData = JSON.parse(storedData);
-
-    return Array.isArray(parsedData) ? parsedData : [];
-  } catch (error) {
-    console.error("No fue posible leer las solicitudes:", error);
-    return [];
-  }
+function normalizeAppointment(row) {
+  return {
+    id: row.id,
+    nombre: row.nombre,
+    rut: row.rut || "",
+    telefono: row.telefono,
+    email: row.email || "",
+    especialidad: row.especialidad,
+    prevision: row.prevision || "",
+    modalidad: row.modalidad,
+    fechaPreferida: row.fecha_preferida || "",
+    horario: row.horario || "",
+    mensaje: row.mensaje || "",
+    status: row.estado,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
 }
 
-function writeAppointments(appointments) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appointments));
-}
-
-export function getAppointments() {
-  return readAppointments().sort(
-    (first, second) =>
-      new Date(second.createdAt).getTime() -
-      new Date(first.createdAt).getTime(),
-  );
-}
-
-export function createAppointmentRequest(formData) {
-  const appointments = readAppointments();
-
-  const newAppointment = {
-    id:
-      typeof crypto !== "undefined" && crypto.randomUUID
-        ? crypto.randomUUID()
-        : `solicitud-${Date.now()}`,
-    ...formData,
-    status: APPOINTMENT_STATUSES.PENDING,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+export async function createAppointmentRequest(formData) {
+  const payload = {
+    nombre: formData.nombre,
+    rut: formData.rut || null,
+    telefono: formData.telefono,
+    email: formData.email || null,
+    especialidad: formData.especialidad,
+    prevision: formData.prevision || null,
+    modalidad: formData.modalidad,
+    fecha_preferida: formData.fechaPreferida || null,
+    horario: formData.horario || null,
+    mensaje: formData.mensaje || null,
+    estado: APPOINTMENT_STATUSES.PENDING,
   };
 
-  writeAppointments([newAppointment, ...appointments]);
+  const { error } = await supabase
+    .from("appointment_requests")
+    .insert(payload);
 
-  return newAppointment;
+  if (error) {
+    console.error(
+      "Error al registrar solicitud:",
+      error,
+    );
+
+    throw new Error(
+      "No fue posible registrar la solicitud.",
+    );
+  }
+
+  return true;
 }
 
-export function updateAppointmentStatus(appointmentId, newStatus) {
-  const appointments = readAppointments();
+export async function getAppointments() {
+  const { data, error } = await supabase
+    .from("appointment_requests")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  const updatedAppointments = appointments.map((appointment) =>
-    appointment.id === appointmentId
-      ? {
-          ...appointment,
-          status: newStatus,
-          updatedAt: new Date().toISOString(),
-        }
-      : appointment,
-  );
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
 
-  writeAppointments(updatedAppointments);
+  if (error) {
+    throw error;
+  }
 
-  return updatedAppointments;
+  return data.map(normalizeAppointment);
 }
 
-export function deleteAppointmentRequest(appointmentId) {
-  const appointments = readAppointments();
+export async function updateAppointmentStatus(
+  appointmentId,
+  newStatus,
+) {
+  const { data, error } = await supabase
+    .from("appointment_requests")
+    .update({
+      estado: newStatus,
+    })
+    .eq("id", appointmentId)
+    .select()
+    .single();
 
-  const updatedAppointments = appointments.filter(
-    (appointment) => appointment.id !== appointmentId,
-  );
+  if (error) {
+    console.error(
+      "Error al actualizar estado:",
+      error,
+    );
 
-  writeAppointments(updatedAppointments);
+    throw new Error(
+      "No fue posible actualizar el estado.",
+    );
+  }
 
-  return updatedAppointments;
+  return normalizeAppointment(data);
+}
+
+export async function deleteAppointmentRequest(
+  appointmentId,
+) {
+  const { error } = await supabase
+    .from("appointment_requests")
+    .delete()
+    .eq("id", appointmentId);
+
+  if (error) {
+    console.error(
+      "Error al eliminar solicitud:",
+      error,
+    );
+
+    throw new Error(
+      "No fue posible eliminar la solicitud.",
+    );
+  }
+
+  return appointmentId;
 }

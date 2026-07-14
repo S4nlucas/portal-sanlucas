@@ -106,7 +106,7 @@ function AppointmentForm() {
     });
 
     try {
-      createAppointmentRequest({
+      await createAppointmentRequest({
         nombre: form.nombre.trim(),
         rut: form.rut.trim(),
         telefono: form.telefono.trim(),

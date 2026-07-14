@@ -9,9 +9,7 @@ import {
 const statusOptions = Object.values(APPOINTMENT_STATUSES);
 
 function formatDate(dateValue) {
-  if (!dateValue) {
-    return "Sin preferencia";
-  }
+  if (!dateValue) return "Sin preferencia";
 
   return new Intl.DateTimeFormat("es-CL", {
     day: "2-digit",
@@ -30,13 +28,29 @@ function formatDateTime(dateValue) {
   }).format(new Date(dateValue));
 }
 
-function AdminDashboard() {
+export default function AdminDashboard() {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState("Todos");
   const [searchTerm, setSearchTerm] = useState("");
 
+  async function loadAppointments() {
+    try {
+      setLoading(true);
+
+      const data = await getAppointments();
+
+      setAppointments(data);
+    } catch (error) {
+      console.error(error);
+      alert("No fue posible cargar las solicitudes.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
-    setAppointments(getAppointments());
+    loadAppointments();
   }, []);
 
   const filteredAppointments = useMemo(() => {
@@ -58,7 +72,8 @@ function AdminDashboard() {
         .toLowerCase();
 
       const matchesSearch =
-        !normalizedSearch || searchableContent.includes(normalizedSearch);
+        !normalizedSearch ||
+        searchableContent.includes(normalizedSearch);
 
       return matchesStatus && matchesSearch;
     });
@@ -68,39 +83,58 @@ function AdminDashboard() {
     () => ({
       total: appointments.length,
       pendientes: appointments.filter(
-        (item) => item.status === APPOINTMENT_STATUSES.PENDING,
+        (item) =>
+          item.status === APPOINTMENT_STATUSES.PENDING
       ).length,
       contactados: appointments.filter(
-        (item) => item.status === APPOINTMENT_STATUSES.CONTACTED,
+        (item) =>
+          item.status === APPOINTMENT_STATUSES.CONTACTED
       ).length,
       agendados: appointments.filter(
-        (item) => item.status === APPOINTMENT_STATUSES.SCHEDULED,
+        (item) =>
+          item.status === APPOINTMENT_STATUSES.SCHEDULED
       ).length,
     }),
-    [appointments],
+    [appointments]
   );
 
-  const handleStatusChange = (appointmentId, newStatus) => {
-    const updatedAppointments = updateAppointmentStatus(
-      appointmentId,
-      newStatus,
-    );
+  async function handleStatusChange(id, status) {
+    try {
+      await updateAppointmentStatus(id, status);
 
-    setAppointments(updatedAppointments);
-  };
+      await loadAppointments();
+    } catch (error) {
+      console.error(error);
+      alert("No fue posible actualizar el estado.");
+    }
+  }
 
-  const handleDelete = (appointmentId) => {
-    const confirmed = window.confirm(
-      "¿Desea eliminar definitivamente esta solicitud?",
-    );
-
-    if (!confirmed) {
+  async function handleDelete(id) {
+    if (
+      !window.confirm(
+        "¿Desea eliminar definitivamente esta solicitud?"
+      )
+    ) {
       return;
     }
 
-    const updatedAppointments = deleteAppointmentRequest(appointmentId);
-    setAppointments(updatedAppointments);
-  };
+    try {
+      await deleteAppointmentRequest(id);
+
+      await loadAppointments();
+    } catch (error) {
+      console.error(error);
+      alert("No fue posible eliminar la solicitud.");
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="admin-loading">
+        Cargando solicitudes...
+      </div>
+    );
+  }
 
   return (
     <div className="admin-shell">
@@ -110,7 +144,7 @@ function AdminDashboard() {
 
           <div>
             <strong>Clínica San Lucas</strong>
-            <span>Panel de recepción</span>
+            <span>Panel Recepción</span>
           </div>
         </div>
 
@@ -123,27 +157,32 @@ function AdminDashboard() {
         </nav>
 
         <div className="admin-sidebar-footer">
-          <span>Prototipo local</span>
-          <small>Los datos están guardados en este navegador.</small>
+          <span>Conectado a Supabase</span>
         </div>
       </aside>
 
       <main className="admin-main">
+
         <header className="admin-header">
+
           <div>
-            <span className="admin-overline">Recepción</span>
+            <span className="admin-overline">
+              Recepción
+            </span>
+
             <h1>Solicitudes de atención</h1>
+
             <p>
-              Revise, contacte y actualice el estado de cada solicitud.
+              Revise, contacte y actualice el
+              estado de cada solicitud.
             </p>
+
           </div>
 
-          <a className="button button-primary" href="/">
-            Ir al sitio
-          </a>
         </header>
 
         <section className="admin-stats">
+
           <article>
             <span>Total</span>
             <strong>{stats.total}</strong>
@@ -163,163 +202,183 @@ function AdminDashboard() {
             <span>Agendados</span>
             <strong>{stats.agendados}</strong>
           </article>
+
         </section>
 
         <section className="admin-content">
+
           <div className="admin-toolbar">
+
             <input
               type="search"
+              placeholder="Buscar..."
               value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Buscar por paciente, RUT o especialidad"
+              onChange={(e) =>
+                setSearchTerm(e.target.value)
+              }
             />
 
             <select
               value={selectedStatus}
-              onChange={(event) => setSelectedStatus(event.target.value)}
+              onChange={(e) =>
+                setSelectedStatus(e.target.value)
+              }
             >
-              <option value="Todos">Todos los estados</option>
+
+              <option value="Todos">
+                Todos
+              </option>
 
               {statusOptions.map((status) => (
-                <option key={status} value={status}>
+                <option
+                  key={status}
+                  value={status}
+                >
                   {status}
                 </option>
               ))}
+
             </select>
+
           </div>
 
           {filteredAppointments.length === 0 ? (
+
             <div className="admin-empty">
-              <strong>No hay solicitudes para mostrar.</strong>
-              <span>
-                Complete el formulario del sitio para generar una solicitud de
-                prueba.
-              </span>
+              No existen solicitudes.
             </div>
+
           ) : (
+
             <div className="appointment-admin-list">
-              {filteredAppointments.map((appointment) => (
-                <article
-                  className="appointment-admin-card"
-                  key={appointment.id}
-                >
-                  <div className="appointment-admin-header">
-                    <div>
-                      <span className="appointment-date">
-                        Recibida el {formatDateTime(appointment.createdAt)}
-                      </span>
 
-                      <h2>{appointment.nombre}</h2>
+              {filteredAppointments.map(
+                (appointment) => (
 
-                      <span className="appointment-specialty">
-                        {appointment.especialidad}
-                      </span>
+                  <article
+                    key={appointment.id}
+                    className="appointment-admin-card"
+                  >
+
+                    <div className="appointment-admin-header">
+
+                      <div>
+
+                        <span className="appointment-date">
+                          {formatDateTime(
+                            appointment.createdAt
+                          )}
+                        </span>
+
+                        <h2>
+                          {appointment.nombre}
+                        </h2>
+
+                        <span className="appointment-specialty">
+                          {
+                            appointment.especialidad
+                          }
+                        </span>
+
+                      </div>
+
                     </div>
 
-                    <span
-                      className={`status-badge status-${appointment.status
-                        .toLowerCase()
-                        .normalize("NFD")
-                        .replace(/[\u0300-\u036f]/g, "")}`}
-                    >
-                      {appointment.status}
-                    </span>
-                  </div>
+                    <div className="appointment-admin-details">
 
-                  <div className="appointment-admin-details">
-                    <div>
-                      <span>RUT</span>
-                      <strong>{appointment.rut || "No informado"}</strong>
+                      <div>
+                        <span>RUT</span>
+                        <strong>
+                          {appointment.rut ||
+                            "No informado"}
+                        </strong>
+                      </div>
+
+                      <div>
+                        <span>Teléfono</span>
+                        <strong>
+                          {
+                            appointment.telefono
+                          }
+                        </strong>
+                      </div>
+
+                      <div>
+                        <span>Correo</span>
+                        <strong>
+                          {appointment.email ||
+                            "No informado"}
+                        </strong>
+                      </div>
+
+                      <div>
+                        <span>Fecha</span>
+                        <strong>
+                          {formatDate(
+                            appointment.fechaPreferida
+                          )}
+                        </strong>
+                      </div>
+
                     </div>
 
-                    <div>
-                      <span>Teléfono</span>
-                      <strong>{appointment.telefono}</strong>
-                    </div>
+                    {appointment.mensaje && (
+                      <div className="appointment-message">
+                        <p>
+                          {appointment.mensaje}
+                        </p>
+                      </div>
+                    )}
 
-                    <div>
-                      <span>Correo</span>
-                      <strong>{appointment.email || "No informado"}</strong>
-                    </div>
-
-                    <div>
-                      <span>Previsión</span>
-                      <strong>
-                        {appointment.prevision || "No informada"}
-                      </strong>
-                    </div>
-
-                    <div>
-                      <span>Modalidad</span>
-                      <strong>{appointment.modalidad}</strong>
-                    </div>
-
-                    <div>
-                      <span>Fecha preferida</span>
-                      <strong>{formatDate(appointment.fechaPreferida)}</strong>
-                    </div>
-
-                    <div>
-                      <span>Horario</span>
-                      <strong>
-                        {appointment.horario || "Sin preferencia"}
-                      </strong>
-                    </div>
-                  </div>
-
-                  {appointment.mensaje && (
-                    <div className="appointment-message">
-                      <span>Información adicional</span>
-                      <p>{appointment.mensaje}</p>
-                    </div>
-                  )}
-
-                  <div className="appointment-admin-actions">
-                    <label>
-                      <span>Estado</span>
+                    <div className="appointment-admin-actions">
 
                       <select
                         value={appointment.status}
-                        onChange={(event) =>
+                        onChange={(e) =>
                           handleStatusChange(
                             appointment.id,
-                            event.target.value,
+                            e.target.value
                           )
                         }
                       >
-                        {statusOptions.map((status) => (
-                          <option key={status} value={status}>
-                            {status}
-                          </option>
-                        ))}
+
+                        {statusOptions.map(
+                          (status) => (
+                            <option
+                              key={status}
+                              value={status}
+                            >
+                              {status}
+                            </option>
+                          )
+                        )}
+
                       </select>
-                    </label>
-
-                    <div>
-                      <a href={`tel:${appointment.telefono}`}>Llamar</a>
-
-                      {appointment.email && (
-                        <a href={`mailto:${appointment.email}`}>
-                          Enviar correo
-                        </a>
-                      )}
 
                       <button
-                        type="button"
-                        onClick={() => handleDelete(appointment.id)}
+                        onClick={() =>
+                          handleDelete(
+                            appointment.id
+                          )
+                        }
                       >
                         Eliminar
                       </button>
+
                     </div>
-                  </div>
-                </article>
-              ))}
+
+                  </article>
+                )
+              )}
+
             </div>
+
           )}
+
         </section>
+
       </main>
+
     </div>
   );
 }
-
-export default AdminDashboard;

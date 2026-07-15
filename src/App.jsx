@@ -1,5 +1,5 @@
 import AppointmentForm from "./components/AppointmentForm";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminAccess from "./components/AdminAccess";
 import "./styles/global.css";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     window.location.pathname.replace(/\/+$/, "") || "/";
 
   if (currentPath === "/admin") {
-    return <AdminDashboard />;
+    return <AdminAccess />;
   }
 
   return (
@@ -17,7 +17,7 @@ function App() {
           <span>Clínica de Nefrología San Lucas</span>
 
           <div className="topbar-links">
-            <a href="tel:+56200000000">+56 2 0000 0000</a>
+            <a href="tel:+56222895253">+56 2 2289 5253</a>
 
             <a href="mailto:contacto@sanlucas.cl">
               contacto@sanlucas.cl
@@ -308,40 +308,84 @@ function App() {
             </div>
           </div>
         </section>
-
+        
         <AppointmentForm />
 
-        <section className="contact-section" id="contacto">
-          <div className="container contact-grid">
-            <div>
-              <span className="eyebrow eyebrow-light">Contacto</span>
+<section className="contact-section" id="contacto">
+  <div className="container contact-grid">
 
-              <h2>Conversemos sobre su atención</h2>
+    <div>
+      <span className="eyebrow eyebrow-light">
+        Contacto
+      </span>
 
-              <p>
-                Nuestro equipo puede orientarle sobre especialidades,
-                disponibilidad y requisitos de atención.
-              </p>
-            </div>
+      <h2>Conversemos sobre su atención</h2>
 
-            <div className="contact-actions">
-              <a
-                className="button button-light"
-                href="tel:+56200000000"
-              >
-                Llamar a la clínica
-              </a>
+      <p>
+        Nuestro equipo puede orientarle sobre
+        especialidades, disponibilidad y requisitos
+        para su atención.
+      </p>
 
-              <a
-                className="button button-outline-light"
-                href="mailto:contacto@sanlucas.cl"
-              >
-                Enviar correo
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
+      <div className="contact-information">
+
+        <div>
+          <strong>Dirección</strong>
+
+          <span>
+            Avenida Diego Portales N.º 197,
+            La Florida,
+            Región Metropolitana
+          </span>
+        </div>
+
+        <div>
+          <strong>Teléfono</strong>
+
+          <a href="tel:+56222895253">
+            +56 2 2289 5253
+          </a>
+        </div>
+
+        <div>
+          <strong>Correo</strong>
+
+          <a href="mailto:contacto@sanlucas.cl">
+            contacto@sanlucas.cl
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div className="contact-card">
+
+      <h3>¿Necesita orientación?</h3>
+
+      <p>
+        Nuestro equipo responderá sus consultas y
+        le ayudará a coordinar una atención.
+      </p>
+
+      <a
+        className="button button-outline-light"
+        href="tel:+56222895253"
+      >
+        Llamar a la clínica
+      </a>
+
+      <a
+        className="button button-primary"
+        href="#agenda"
+      >
+        Solicitar una hora
+      </a>
+
+    </div>
+
+  </div>
+</section>
+</main>
 
       <footer className="footer">
         <div className="container footer-inner">
@@ -350,7 +394,13 @@ function App() {
             <span>Nefrología y cuidado renal</span>
           </div>
 
-          <span>© 2026 Clínica San Lucas</span>
+          <div className="footer-actions">
+            <a href="/admin" className="staff-access-link">
+              Acceso funcionarios
+            </a>
+
+            <span>© 2026 Clínica San Lucas</span>
+          </div>
         </div>
       </footer>
     </div>

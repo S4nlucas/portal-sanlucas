@@ -1,8 +1,26 @@
 import AppointmentForm from "./components/AppointmentForm";
 import AdminAccess from "./components/AdminAccess";
 import "./styles/global.css";
-import heroImage from "./assets/images/hero/hero-dialisis.jpg";
+
+import heroImage from "./assets/images/Hero/hero-dialisis.JPG";
 import clinicLogo from "./assets/images/brand/logo-san-lucas-acreditado.jpg";
+import hemodialysisImage from "./assets/images/specialties/hemodialisis.png";
+import kidneyImage from "./assets/images/specialties/rinones.png";
+import integralCareImage from "./assets/images/specialties/tratamiento-integral.png";
+
+import {
+  Activity,
+  ArrowRight,
+  BookOpenCheck,
+  CalendarCheck,
+  CircleHelp,
+  CreditCard,
+  Droplets,
+  FileText,
+  HeartPulse,
+  Phone,
+  Salad,
+} from "lucide-react";
 
 function App() {
   const currentPath =
@@ -14,29 +32,15 @@ function App() {
 
   return (
     <div className="site-shell">
-      <header className="topbar">
-        <div className="container topbar-inner">
-          <span>Clínica de Nefrología San Lucas</span>
-
-          <div className="topbar-links">
-            <a href="tel:+56222895253">+56 2 2289 5253</a>
-
-            <a href="mailto:contacto@sanlucas.cl">
-              contacto@sanlucas.cl
-            </a>
-          </div>
-        </div>
-      </header>
-
       <nav className="navbar">
         <div className="container navbar-inner">
           <a className="brand brand-logo-link" href="#inicio">
-  <img
-    className="brand-logo-image"
-    src={clinicLogo}
-    alt="Nefrodiálisis San Lucas, centro acreditado"
-  />
-</a>
+            <img
+              className="brand-logo-image"
+              src={clinicLogo}
+              alt="Nefrodiálisis San Lucas, centro acreditado"
+            />
+          </a>
 
           <div className="nav-links">
             <a href="#inicio">Inicio</a>
@@ -54,85 +58,84 @@ function App() {
 
       <main>
         <section
-  className="hero"
-  id="inicio"
-  style={{
-    backgroundImage: `linear-gradient(
-      rgba(8, 35, 66, 0.82),
-      rgba(8, 35, 66, 0.72)
-    ), url(${heroImage})`,
-  }}
->
-  <div className="container hero-grid">
-    <div className="hero-content">
-      <span className="eyebrow">
-        Atención especializada en salud renal
-      </span>
+          className="hero"
+          id="inicio"
+          style={{
+            backgroundImage: `linear-gradient(
+              rgba(8, 35, 66, 0.82),
+              rgba(8, 35, 66, 0.72)
+            ), url(${heroImage})`,
+          }}
+        >
+          <div className="container hero-grid">
+            <div className="hero-content">
+              <span className="eyebrow">
+                Atención especializada en salud renal
+              </span>
 
-      <h1>
-        Cuidamos su salud renal con experiencia y cercanía
-      </h1>
+              <h1>
+                Cuidamos su salud renal con experiencia y cercanía
+              </h1>
 
-      <p>
-        Atención nefrológica integral, tratamientos especializados y
-        acompañamiento permanente para pacientes y sus familias.
-      </p>
+              <p>
+                Atención nefrológica integral, tratamientos especializados y
+                acompañamiento permanente para pacientes y sus familias.
+              </p>
 
-      <div className="hero-actions">
-        <a className="button button-primary" href="#agenda">
-          Solicitar hora
-        </a>
+              <div className="hero-actions">
+                <a className="button button-primary" href="#agenda">
+                  Solicitar hora
+                </a>
 
-        <a className="button button-secondary" href="#especialidades">
-          Ver especialidades
-        </a>
-      </div>
+                <a
+                  className="button button-secondary"
+                  href="#especialidades"
+                >
+                  Ver especialidades
+                </a>
+              </div>
 
-      <div className="hero-features">
-        <div>
-          <strong>Atención integral</strong>
-          <span>Evaluación, tratamiento y seguimiento</span>
-        </div>
+              <div className="hero-features">
+                <div>
+                  <strong>Atención integral</strong>
+                  <span>Evaluación, tratamiento y seguimiento</span>
+                </div>
 
-        <div>
-          <strong>Equipo especializado</strong>
-          <span>Profesionales con experiencia clínica</span>
-        </div>
+                <div>
+                  <strong>Equipo especializado</strong>
+                  <span>Profesionales con experiencia clínica</span>
+                </div>
 
-        <div>
-          <strong>Centro acreditado</strong>
-          <span>Compromiso con la calidad y seguridad</span>
-        </div>
-      </div>
-    </div>
+                <div>
+                  <strong>Centro acreditado</strong>
+                  <span>Compromiso con la calidad y seguridad</span>
+                </div>
+              </div>
+            </div>
 
-    <div className="hero-accreditation-card">
-      <span className="hero-card-label">
-        Centro acreditado
-      </span>
+            <div className="hero-accreditation-card">
+              <span className="hero-card-label">Centro acreditado</span>
 
-      <h2>
-        Atención renal con respaldo institucional
-      </h2>
+              <h2>Atención renal con respaldo institucional</h2>
 
-      <p>
-        Clínica San Lucas entrega atención especializada en nefrología
-        y diálisis, con foco en seguridad, calidad y acompañamiento.
-      </p>
+              <p>
+                Clínica San Lucas entrega atención especializada en nefrología
+                y diálisis, con foco en seguridad, calidad y acompañamiento.
+              </p>
 
-      <ul>
-        <li>Atención nefrológica especializada</li>
-        <li>Centro de diálisis</li>
-        <li>Equipo multidisciplinario</li>
-        <li>Solicitud de atención en línea</li>
-      </ul>
+              <ul>
+                <li>Atención nefrológica especializada</li>
+                <li>Centro de diálisis</li>
+                <li>Equipo multidisciplinario</li>
+                <li>Solicitud de atención en línea</li>
+              </ul>
 
-      <a className="button button-light button-full" href="#agenda">
-        Solicitar evaluación
-      </a>
-    </div>
-  </div>
-</section>
+              <a className="button button-light button-full" href="#agenda">
+                Solicitar evaluación
+              </a>
+            </div>
+          </div>
+        </section>
 
         <section className="quick-access">
           <div className="container quick-access-grid">
@@ -165,108 +168,302 @@ function App() {
           </div>
         </section>
 
-        <section className="section" id="especialidades">
+        <section
+          className="section specialties-section"
+          id="especialidades"
+        >
           <div className="container">
-            <div className="section-heading">
+            <div className="section-heading specialties-heading">
               <span className="eyebrow">Especialidades</span>
 
               <h2>
-                Atención centrada en cada etapa del cuidado renal
+                Atención especializada para cada etapa del cuidado renal
               </h2>
 
               <p>
-                Servicios especializados para prevención, diagnóstico,
-                tratamiento y seguimiento de enfermedades renales.
+                Evaluación, tratamiento y acompañamiento clínico para
+                pacientes con enfermedad renal y sus familias.
               </p>
             </div>
 
-            <div className="cards-grid">
-              <article className="service-card">
-                <div className="service-icon">01</div>
+            <div className="specialties-grid">
+              <article className="specialty-overlay-card">
+                <img
+                  src={kidneyImage}
+                  alt="Nefrología y cuidado renal"
+                />
 
-                <h3>Nefrología</h3>
+                <div className="specialty-overlay" />
 
-                <p>
-                  Evaluación, diagnóstico y control de enfermedades renales.
-                </p>
+                <div className="specialty-overlay-content">
+                  <div className="specialty-overlay-icon">
+                    <HeartPulse size={27} strokeWidth={1.8} />
+                  </div>
 
-                <a href="#agenda">Solicitar atención</a>
+                  <span>Evaluación clínica</span>
+
+                  <h3>Nefrología</h3>
+
+                  <p>
+                    Evaluación, diagnóstico y seguimiento de enfermedades
+                    renales.
+                  </p>
+
+                  <a href="#agenda">
+                    Solicitar atención
+                    <ArrowRight size={17} />
+                  </a>
+                </div>
               </article>
 
-              <article className="service-card">
-                <div className="service-icon">02</div>
+              <article className="specialty-overlay-card">
+                <img
+                  src={hemodialysisImage}
+                  alt="Tratamiento de hemodiálisis"
+                />
 
-                <h3>Hemodiálisis</h3>
+                <div className="specialty-overlay specialty-overlay-featured" />
 
-                <p>
-                  Tratamientos supervisados y acompañamiento clínico continuo.
-                </p>
+                <div className="specialty-overlay-content">
+                  <div className="specialty-overlay-icon">
+                    <Activity size={27} strokeWidth={1.8} />
+                  </div>
 
-                <a href="#agenda">Solicitar atención</a>
+                  <span>Tratamiento supervisado</span>
+
+                  <h3>Hemodiálisis</h3>
+
+                  <p>
+                    Tratamiento especializado con monitoreo y control clínico
+                    permanente.
+                  </p>
+
+                  <a href="#agenda">
+                    Solicitar atención
+                    <ArrowRight size={17} />
+                  </a>
+                </div>
               </article>
 
-              <article className="service-card">
-                <div className="service-icon">03</div>
+              <article className="specialty-overlay-card specialty-peritoneal-card">
+                <div className="specialty-overlay specialty-overlay-featured" />
 
-                <h3>Diálisis peritoneal</h3>
+                <div className="specialty-overlay-content">
+                  <div className="specialty-overlay-icon">
+                    <Droplets size={27} strokeWidth={1.8} />
+                  </div>
 
-                <p>
-                  Orientación, capacitación y seguimiento especializado.
-                </p>
+                  <span>Terapia domiciliaria</span>
 
-                <a href="#agenda">Solicitar atención</a>
+                  <h3>Diálisis peritoneal</h3>
+
+                  <p>
+                    Capacitación y seguimiento para realizar el tratamiento de
+                    forma segura.
+                  </p>
+
+                  <a href="#agenda">
+                    Solicitar atención
+                    <ArrowRight size={17} />
+                  </a>
+                </div>
               </article>
 
-              <article className="service-card">
-                <div className="service-icon">04</div>
+              <article className="specialty-overlay-card">
+                <img
+                  src={integralCareImage}
+                  alt="Educación y cuidado integral del paciente renal"
+                />
 
-                <h3>Educación al paciente</h3>
+                <div className="specialty-overlay" />
 
-                <p>
-                  Información clara para pacientes, cuidadores y familias.
-                </p>
+                <div className="specialty-overlay-content">
+                  <div className="specialty-overlay-icon">
+                    <BookOpenCheck size={27} strokeWidth={1.8} />
+                  </div>
 
-                <a href="#pacientes">Ver recursos</a>
+                  <span>Orientación integral</span>
+
+                  <h3>Educación al paciente</h3>
+
+                  <p>
+                    Información práctica para pacientes, cuidadores y
+                    familias.
+                  </p>
+
+                  <a href="#pacientes">
+                    Ver información
+                    <ArrowRight size={17} />
+                  </a>
+                </div>
               </article>
             </div>
           </div>
         </section>
 
-        <section className="section section-soft" id="pacientes">
-          <div className="container split-layout">
-            <div>
-              <span className="eyebrow">Información útil</span>
+        <section className="section patients-section" id="pacientes">
+          <div className="container">
+            <div className="patients-header">
+              <div className="patients-heading">
+                <span className="eyebrow">Información útil</span>
 
-              <h2>
-                Todo lo que el paciente necesita en un solo lugar
-              </h2>
+                <h2>
+                  Todo lo que el paciente necesita antes de su atención
+                </h2>
 
-              <p>
-                La nueva plataforma permitirá centralizar indicaciones,
-                requisitos, preguntas frecuentes y canales de contacto.
-              </p>
+                <p>
+                  Consulte documentos, indicaciones, cobertura y canales de
+                  contacto antes de asistir a Clínica San Lucas.
+                </p>
+              </div>
+
+              <a className="patients-contact-link" href="#contacto">
+                ¿Necesita ayuda?
+                <ArrowRight size={17} />
+              </a>
             </div>
 
-            <div className="info-list">
-              <article>
-                <strong>Preparación para la atención</strong>
-                <span>
-                  Documentos, exámenes y recomendaciones previas.
-                </span>
+            <div className="patients-grid">
+              <article className="patient-resource-card">
+                <div className="patient-resource-icon">
+                  <FileText size={27} strokeWidth={1.8} />
+                </div>
+
+                <div>
+                  <span className="patient-resource-kicker">
+                    Antes de asistir
+                  </span>
+
+                  <h3>Preparación para la atención</h3>
+
+                  <p>
+                    Revise documentos, exámenes e indicaciones necesarias para
+                    su consulta.
+                  </p>
+                </div>
+
+                <a href="#agenda">
+                  Solicitar atención
+                  <ArrowRight size={16} />
+                </a>
               </article>
 
-              <article>
-                <strong>Convenios y cobertura</strong>
-                <span>
-                  Información sobre previsión y formas de atención.
-                </span>
+              <article className="patient-resource-card">
+                <div className="patient-resource-icon">
+                  <CreditCard size={27} strokeWidth={1.8} />
+                </div>
+
+                <div>
+                  <span className="patient-resource-kicker">Previsión</span>
+
+                  <h3>Convenios y cobertura</h3>
+
+                  <p>
+                    Información sobre Fonasa, Isapres y modalidades disponibles
+                    de atención.
+                  </p>
+                </div>
+
+                <a href="#contacto">
+                  Consultar cobertura
+                  <ArrowRight size={16} />
+                </a>
               </article>
 
-              <article>
-                <strong>Preguntas frecuentes</strong>
-                <span>
-                  Respuestas directas a las consultas más habituales.
-                </span>
+              <article className="patient-resource-card">
+                <div className="patient-resource-icon">
+                  <CircleHelp size={27} strokeWidth={1.8} />
+                </div>
+
+                <div>
+                  <span className="patient-resource-kicker">
+                    Orientación
+                  </span>
+
+                  <h3>Preguntas frecuentes</h3>
+
+                  <p>
+                    Respuestas a las consultas más habituales de pacientes y
+                    familiares.
+                  </p>
+                </div>
+
+                <a href="#contacto">
+                  Resolver una consulta
+                  <ArrowRight size={16} />
+                </a>
+              </article>
+
+              <article className="patient-resource-card">
+                <div className="patient-resource-icon">
+                  <Salad size={27} strokeWidth={1.8} />
+                </div>
+
+                <div>
+                  <span className="patient-resource-kicker">
+                    Cuidado diario
+                  </span>
+
+                  <h3>Alimentación renal</h3>
+
+                  <p>
+                    Recomendaciones generales para apoyar el cuidado y
+                    tratamiento renal.
+                  </p>
+                </div>
+
+                <a href="#especialidades">
+                  Conocer el enfoque integral
+                  <ArrowRight size={16} />
+                </a>
+              </article>
+
+              <article className="patient-resource-card">
+                <div className="patient-resource-icon">
+                  <CalendarCheck size={27} strokeWidth={1.8} />
+                </div>
+
+                <div>
+                  <span className="patient-resource-kicker">
+                    Coordinación
+                  </span>
+
+                  <h3>Solicitud de hora</h3>
+
+                  <p>
+                    Envíe sus datos y nuestro equipo se comunicará para
+                    confirmar disponibilidad.
+                  </p>
+                </div>
+
+                <a href="#agenda">
+                  Solicitar una hora
+                  <ArrowRight size={16} />
+                </a>
+              </article>
+
+              <article className="patient-resource-card patient-resource-featured">
+                <div className="patient-resource-icon">
+                  <Phone size={27} strokeWidth={1.8} />
+                </div>
+
+                <div>
+                  <span className="patient-resource-kicker">
+                    Atención directa
+                  </span>
+
+                  <h3>¿Necesita orientación?</h3>
+
+                  <p>
+                    Comuníquese con la clínica para resolver dudas sobre
+                    requisitos, horarios o atención.
+                  </p>
+                </div>
+
+                <a href="tel:+56222895253">
+                  Llamar al +56 2 2289 5253
+                  <ArrowRight size={16} />
+                </a>
               </article>
             </div>
           </div>
@@ -315,84 +512,69 @@ function App() {
             </div>
           </div>
         </section>
-        
+
         <AppointmentForm />
 
-<section className="contact-section" id="contacto">
-  <div className="container contact-grid">
+        <section className="contact-section" id="contacto">
+          <div className="container contact-grid">
+            <div>
+              <span className="eyebrow eyebrow-light">Contacto</span>
 
-    <div>
-      <span className="eyebrow eyebrow-light">
-        Contacto
-      </span>
+              <h2>Conversemos sobre su atención</h2>
 
-      <h2>Conversemos sobre su atención</h2>
+              <p>
+                Nuestro equipo puede orientarle sobre especialidades,
+                disponibilidad y requisitos para su atención.
+              </p>
 
-      <p>
-        Nuestro equipo puede orientarle sobre
-        especialidades, disponibilidad y requisitos
-        para su atención.
-      </p>
+              <div className="contact-information">
+                <div>
+                  <strong>Dirección</strong>
 
-      <div className="contact-information">
+                  <span>
+                    Avenida Diego Portales N.º 197, La Florida, Región
+                    Metropolitana
+                  </span>
+                </div>
 
-        <div>
-          <strong>Dirección</strong>
+                <div>
+                  <strong>Teléfono</strong>
 
-          <span>
-            Avenida Diego Portales N.º 197,
-            La Florida,
-            Región Metropolitana
-          </span>
-        </div>
+                  <a href="tel:+56222895253">+56 2 2289 5253</a>
+                </div>
 
-        <div>
-          <strong>Teléfono</strong>
+                <div>
+                  <strong>Correo</strong>
 
-          <a href="tel:+56222895253">
-            +56 2 2289 5253
-          </a>
-        </div>
+                  <a href="mailto:contacto@sanlucas.cl">
+                    contacto@sanlucas.cl
+                  </a>
+                </div>
+              </div>
+            </div>
 
-        <div>
-          <strong>Correo</strong>
+            <div className="contact-card">
+              <h3>¿Necesita orientación?</h3>
 
-          <a href="mailto:contacto@sanlucas.cl">
-            contacto@sanlucas.cl
-          </a>
-        </div>
+              <p>
+                Nuestro equipo responderá sus consultas y le ayudará a
+                coordinar una atención.
+              </p>
 
-      </div>
-    </div>
+              <a
+                className="button button-outline-light"
+                href="tel:+56222895253"
+              >
+                Llamar a la clínica
+              </a>
 
-    <div className="contact-card">
-
-      <h3>¿Necesita orientación?</h3>
-
-      <p>
-        Nuestro equipo responderá sus consultas y
-        le ayudará a coordinar una atención.
-      </p>
-
-      <a
-        className="button button-outline-light"
-        href="tel:+56222895253"
-      >
-        Llamar a la clínica
-      </a>
-
-      <a
-        className="button button-primary"
-        href="#agenda"
-      >
-        Solicitar una hora
-      </a>
-
-    </div>
-
-  </div>
-</section>
-</main>
+              <a className="button button-primary" href="#agenda">
+                Solicitar una hora
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
 
       <footer className="footer">
         <div className="container footer-inner">

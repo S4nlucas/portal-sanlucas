@@ -1,6 +1,8 @@
 import AppointmentForm from "./components/AppointmentForm";
 import AdminAccess from "./components/AdminAccess";
 import "./styles/global.css";
+import heroImage from "./assets/images/hero/hero-dialisis.jpg";
+import clinicLogo from "./assets/images/brand/logo-san-lucas-acreditado.jpg";
 
 function App() {
   const currentPath =
@@ -28,14 +30,13 @@ function App() {
 
       <nav className="navbar">
         <div className="container navbar-inner">
-          <a className="brand" href="#inicio">
-            <div className="brand-mark">SL</div>
-
-            <div>
-              <strong>Clínica San Lucas</strong>
-              <span>Nefrología y cuidado renal</span>
-            </div>
-          </a>
+          <a className="brand brand-logo-link" href="#inicio">
+  <img
+    className="brand-logo-image"
+    src={clinicLogo}
+    alt="Nefrodiálisis San Lucas, centro acreditado"
+  />
+</a>
 
           <div className="nav-links">
             <a href="#inicio">Inicio</a>
@@ -52,80 +53,86 @@ function App() {
       </nav>
 
       <main>
-        <section className="hero" id="inicio">
-          <div className="container hero-grid">
-            <div className="hero-content">
-              <span className="eyebrow">
-                Atención especializada en salud renal
-              </span>
+        <section
+  className="hero"
+  id="inicio"
+  style={{
+    backgroundImage: `linear-gradient(
+      rgba(8, 35, 66, 0.82),
+      rgba(8, 35, 66, 0.72)
+    ), url(${heroImage})`,
+  }}
+>
+  <div className="container hero-grid">
+    <div className="hero-content">
+      <span className="eyebrow">
+        Atención especializada en salud renal
+      </span>
 
-              <h1>
-                Cuidamos su salud renal con experiencia y cercanía
-              </h1>
+      <h1>
+        Cuidamos su salud renal con experiencia y cercanía
+      </h1>
 
-              <p>
-                Atención nefrológica integral, tratamientos especializados y
-                acompañamiento permanente para pacientes y sus familias.
-              </p>
+      <p>
+        Atención nefrológica integral, tratamientos especializados y
+        acompañamiento permanente para pacientes y sus familias.
+      </p>
 
-              <div className="hero-actions">
-                <a className="button button-primary" href="#agenda">
-                  Solicitar hora
-                </a>
+      <div className="hero-actions">
+        <a className="button button-primary" href="#agenda">
+          Solicitar hora
+        </a>
 
-                <a
-                  className="button button-secondary"
-                  href="#especialidades"
-                >
-                  Ver especialidades
-                </a>
-              </div>
+        <a className="button button-secondary" href="#especialidades">
+          Ver especialidades
+        </a>
+      </div>
 
-              <div className="hero-features">
-                <div>
-                  <strong>Atención integral</strong>
-                  <span>Evaluación, tratamiento y seguimiento</span>
-                </div>
+      <div className="hero-features">
+        <div>
+          <strong>Atención integral</strong>
+          <span>Evaluación, tratamiento y seguimiento</span>
+        </div>
 
-                <div>
-                  <strong>Equipo especializado</strong>
-                  <span>Profesionales con experiencia clínica</span>
-                </div>
+        <div>
+          <strong>Equipo especializado</strong>
+          <span>Profesionales con experiencia clínica</span>
+        </div>
 
-                <div>
-                  <strong>Orientación al paciente</strong>
-                  <span>Información clara y acceso directo</span>
-                </div>
-              </div>
-            </div>
+        <div>
+          <strong>Centro acreditado</strong>
+          <span>Compromiso con la calidad y seguridad</span>
+        </div>
+      </div>
+    </div>
 
-            <div className="hero-card">
-              <div className="hero-card-image">
-                <div className="image-placeholder">
-                  Fotografía principal de la clínica
-                </div>
-              </div>
+    <div className="hero-accreditation-card">
+      <span className="hero-card-label">
+        Centro acreditado
+      </span>
 
-              <div className="appointment-card">
-                <span>Solicitud de atención</span>
+      <h2>
+        Atención renal con respaldo institucional
+      </h2>
 
-                <h2>Solicite una hora médica</h2>
+      <p>
+        Clínica San Lucas entrega atención especializada en nefrología
+        y diálisis, con foco en seguridad, calidad y acompañamiento.
+      </p>
 
-                <p>
-                  Complete sus datos y nuestro equipo se pondrá en contacto
-                  para confirmar disponibilidad.
-                </p>
+      <ul>
+        <li>Atención nefrológica especializada</li>
+        <li>Centro de diálisis</li>
+        <li>Equipo multidisciplinario</li>
+        <li>Solicitud de atención en línea</li>
+      </ul>
 
-                <a
-                  className="button button-primary button-full"
-                  href="#agenda"
-                >
-                  Solicitar atención
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
+      <a className="button button-light button-full" href="#agenda">
+        Solicitar evaluación
+      </a>
+    </div>
+  </div>
+</section>
 
         <section className="quick-access">
           <div className="container quick-access-grid">
